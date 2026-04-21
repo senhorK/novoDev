@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    color: #222;
+
+    /* fundo claro elegante */
+    background:
+        radial-gradient(circle at left, #F6FFFF 10%, #67BCFF 20%, #FFFFFF 100%);
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.conteiner {
+    width: 90%;
+    max-width: 900px;
+    padding: 35px;
+    border-radius: 22px;
+
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(0, 0, 0, 0.04);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.05),
+        0 0 40px rgba(127, 114, 243, 0.05);
+}
+
+/* =========================
+   INFO
+========================= */
+
+.inf h1 {
+    font-size: 52px;
+    margin-bottom: 12px;
+
+    color: #4a4de6;
+}
+
+.inf p {
+    line-height: 1.7;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 35px;
+}
+
+.inf strong {
+    color: #6a5cff;
+}
+
+/* =========================
+   VERSÕES
+========================= */
+
+.verS h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+.verS h5 {
+    margin-bottom: 20px;
+    font-weight: 400;
+    color: #666;
+}
+
+.verS ul {
+    list-style: none;
+}
+
+/* =========================
+   CARD VERSION
+========================= */
+
+.verS li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 20px;
+    margin: 12px 0;
+    border-radius: 14px;
+
+    background: #ffffff;
+    border: 1px solid #eef1f8;
+
+    transition: 0.25s;
+}
+
+.verS li:hover {
+    transform: translateY(-2px);
+
+    background: #f8faff;
+    border: 1px solid #dfe8ff;
+
+    box-shadow:
+        0 8px 20px rgba(106, 92, 255, 0.08);
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.verS a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #4a4de6;
+    transition: 0.2s;
+}
+
+.verS a:hover {
+    opacity: 0.8;
+}
+
+/* =========================
+   TAGS
+========================= */
+
+.tag {
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 999px;
+
+    color: #fff;
+
+    background: linear-gradient(
+        90deg,
+        #4caf50,
+        #66bb6a
+    );
+}
+
+

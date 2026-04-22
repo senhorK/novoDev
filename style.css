@@ -208,6 +208,10 @@ header {
 
 /* O Card Individual */
 .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
@@ -266,6 +270,24 @@ header {
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: 0.3s;
 }
+
+.card .status{
+    position: absolute;
+    top: 0;
+    right: 50px;
+    text-decoration: none;
+    color: #fff;
+    background: #FF0101;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+.card .status.ativo{
+    background: #25FF01;
+}
+
 
 /* =========================
    EFEITOS DE HOVER (ANIMAÇÃO)

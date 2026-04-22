@@ -218,8 +218,8 @@ class Obstacle {
 }
 class Player {
   constructor() {
-    this.x = 100;
-    this.y = 100;
+    this.x = ctx.canvas.width/3;
+    this.y = ctx.canvas.height/3;
     this.size = 32;
     this.line = 1;
    

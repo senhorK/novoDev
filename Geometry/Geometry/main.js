@@ -2,73 +2,6 @@
 
 
 
-class Particulas {
-   constructor(x,y) {
-      this.x = x; 
-      this.y = y;
-      //this.vx = (Math.random() + 5) * 1;
-      this.vx = Math.random() * 4 + 2;
-      this.vy = (Math.random() - 0.5) * 2;
-      this.life = 30;
-      this.opacite = 1;
-      this.size = Math.random() * 5;
-   }
-   
-   
-   update(){
-      this.x -= this.vx;
-      this.y += this.vy;
-      this.vy += 0.05;
-      
-      this.life--;
-      this.opacite = this.life/30;
-   }
-   
-   draw(){
-      ctx.save()
-         
-         ctx.globalAlpha = this.opacite;
-         ctx.beginPath()
-         ctx.fillStyle = "#E400FF";
-         ctx.fillRect(this.x, this.y, this.size,this.size);    
-         
-      ctx.restore()
-   }
-   
-   
-}
-class Part {
-   constructor() {this.ls = [];}
-   
-   add(x,y){
-      for (var i = 0; i < 2; i++) {
-          this.ls.push(new Particulas(x,y));
-      }
-   }
-   
-   
-   part() {
-      for (let i = this.ls.length - 1; i >= 0; i--) {
-        let p = this.ls[i];
-        
-        p.update();
-        p.draw();
-        
-        if (p.life <= 0) {
-          this.ls.splice(i, 1);
-        }
-      }
-    }
-
-   /*part(){
-      this.ls.forEach((p,i) =>{
-         p.update()
-         p.draw()
-         
-         if(p.life <= 0) this.ls.splice(i,1)
-      })
-   }*/
-}
 
 
 
@@ -93,7 +26,11 @@ const colisoes ={
           return Colid(objPlayer, obs);
         })
         
-        if (colidSpike) { game.newGame() }
+        if (colidSpike) {
+          //game.newGame()
+          game.status = "level"
+          game.level.classList.add("ativo")
+          }
    },
    colidLateral() {
        const tipos = ["platform", "coluna", "block"]
@@ -114,7 +51,11 @@ const colisoes ={
           });
           
           
-        if (colidR) game.newGame();
+        if (colidR){
+          game.status = "level"
+          game.level.classList.add("ativo")
+          //game.newGame();
+        }
     },
    colidMoedas() {
       const nextBox = {
@@ -128,8 +69,8 @@ const colisoes ={
       const index = obstaculos.findIndex(obs => obs.type === "moeda" && Colid(obs, nextBox));
       
       if (index !== -1) {
-        obstaculos.splice(index, 1);
-        somMoeda1()
+          obstaculos.splice(index, 1);
+          somMoeda1()
       }
     }
 
@@ -169,18 +110,42 @@ const som1 = new Audio();
 
 
 
-
 class Game {
   constructor() {
-    this.status = "nexLevel";
+    this.status = "home";
     this.p = document.querySelector("#p1")
+    this.menu = document.querySelector(".menuHome")
+    this.level = document.querySelector(".menuLevel")
     this.levelUp = document.querySelector(".level-complete-overlay")
+    
+    
+    
+    this.idxObs = 0;
+    this.lsObs= []
+    
     this.init()
   }
   
   newGame(){
     mundo  = new Mundo();
-    //obstaculos = FaseTeste();
+    this.lsObs = [
+      na_Maciota(),
+      FaseTeste(),
+      oterro(),
+      tribunalDoCaos(),
+      sofrimento_Sangrento(),
+      espinhos_Sangrentos(),
+      gargataColosal(),
+      sofrimentoSupremo(),
+      tunel()
+    ];
+    
+    
+    
+    
+    
+    
+    obstaculos = this.lsObs[this.idxObs];
    // obstaculos = oterro()
     //obstaculos = tribunalDoCaos()
     //obstaculos = sofrimento_Sangrento()
@@ -188,7 +153,7 @@ class Game {
     //obstaculos = gargataColosal()
     //obstaculos = sofrimentoSupremo();
     //obstaculos = tunel();
-    obstaculos = na_Maciota();
+    //obstaculos = this.lsObs[this.idxObs];
     const typ = ["platform", "coluna", "block"]
    
     obstaculos.forEach(obs => {
@@ -207,29 +172,32 @@ class Game {
   
   update(){
     mundo.update();
+    if(this.status === "jogando"){
+     
+      for (let i = obstaculos.length-1; i >= 0; i--) {
+          var obs = obstaculos[i];
+          
+          obs.update()
+          if(obs.x + obs.w < 0) obstaculos.splice(i, 1)
+      }
     
-    for (let i = obstaculos.length-1; i >= 0; i--) {
-        var obs = obstaculos[i];
-        
-        obs.update()
-        if(obs.x + obs.w < 0) obstaculos.splice(i, 1)
+    
+      player.update();
+      colisoes.colidPlayerEspinho();
+      colisoes.colidLateral();
+      colisoes.colidMoedas()
+      
+      if(obstaculos.length <= 0){
+        this.status = "nexLevel"
+        this.levelUp.classList.add("ativo")
+      }
     }
-    player.update();
     
-    
-    
-    
-    
-    colisoes.colidPlayerEspinho();
-    colisoes.colidLateral();
-    colisoes.colidMoedas()
-    
+    this.p.innerHTML = this.status;
   }
   
   
   jogando(){
-    
-     mundo.draw();
      obstaculos.forEach(obs => {obs.draw();});
      player.draw();
      part.add(player.x, player.y+(player.size-2))
@@ -237,7 +205,6 @@ class Game {
      
      if(obstaculos.length <= 0){
        this.status = "nexLevel"
-       //this.levelUp.classList.add("")
      }
   } 
   
@@ -245,13 +212,28 @@ class Game {
     ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
     mundo.draw();
     
-    if(this.status === "nexLevel"){
-      this.levelUp.classList.add("ativo")
-    }
-    else 
     if(this.status === "jogando"){
       this.jogando()
     }
+    else  
+    if(status.atual === "nexLevel"){
+      
+    }
+    
+    /*if(this.status === "home"){
+      
+    }
+    else
+    if(this.status === "nexLevel"){
+      this.levelUp.classList.add("ativo")
+    }
+    else */
+    
+    
+    
+    /*if(this.status === "jogando"){
+      this.jogando()
+    }*/
     
     
      //if(obstaculos.length > 0) this.jogando();
@@ -336,17 +318,62 @@ class Game {
       control.jump = false;
     })
     
+    
+    this.menu.addEventListener("click", (e)=>{
+        const btn = e.target.closest("button");
+        if(!btn) return;
+        
+        const nome  = btn.innerText;
+        const dataX = e.target.dataset.x;
+        
+        if(dataX === "jogar"){
+           this.status = "level"
+           
+           this.menu.classList.remove("ativo");
+           this.level.classList.add("ativo");
+           this.newGame();
+        }
+        
+    })
+    this.level.addEventListener("click", (e)=>{
+       const to = e.target.closest(".item");
+       if(!to) return;
+       
+       const nubem = to.querySelector(".numero").innerText;
+       const lock  = to.querySelector(".status").innerText;
+       
+       console.log(`
+         numero: ${nubem} 
+         lock: ${lock}
+       `)
+       
+       
+       this.level.classList.remove("ativo")
+       this.status = "jogando";
+       this.idxObs = Number(nubem);
+       this.newGame()
+    })
     this.levelUp.addEventListener("click", (e)=>{
         const btn = e.target.closest("button");
         if(!btn) return;
         
         const nome = btn.innerText;
         if(nome === "NEXT LEVEL"){
-          this.status = "jogando";
           this.levelUp.classList.remove("ativo")
-          this.newGame()
+          this.status = "jogando"
+          this.idxObs++;
+          this.newGame();
+        }
+        else  
+        if (nome === "HOME") {
+          this.status = "home";
+          this.levelUp.classList.remove("ativo")
+          this.menu.classList.add("ativo")
+          //this.newGame()
         }
     })
+  
+    
   }
 }
 som1.onload = ()=>{console.log("som carregado")}

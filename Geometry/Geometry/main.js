@@ -74,7 +74,68 @@ class Part {
 
 
 
+const colisoes ={
+   
+   colidPlayerEspinho() {
+        ////colisão player e espinhos
+        const colidLs = ["spike", "spikeTop"]
+        const objPlayer = {
+          x: player.x,
+          y: player.y,
+          w: player.size,
+          h: player.size
+        }
+        
+    
+        const colidSpike = obstaculos.find(obs => {
+          if (!colidLs.includes(obs.type)) return;
+          
+          return Colid(objPlayer, obs);
+        })
+        
+        if (colidSpike) { game.newGame() }
+   },
+   colidLateral() {
+       const tipos = ["platform", "coluna", "block"]
+       const nextBoxX = {
+         x: player.x + player.size,
+         y: player.y,
+         w: 4,
+         h: player.size
+       };
+      
+       const colidR = obstaculos.find(obs => {
+         if(tipos.includes(obs.type)) {
+            const sideLeft = { x: obs.x, y: obs.y, w: 4, h: obs.h };
+            return Colid(nextBoxX, sideLeft);
+         }
+            
+            return;
+          });
+          
+          
+        if (colidR) game.newGame();
+    },
+   colidMoedas() {
+      const nextBox = {
+        x: player.x + player.size,
+        y: player.y,
+        w: player.size,
+        h: player.size
+      };
+      
+      
+      const index = obstaculos.findIndex(obs => obs.type === "moeda" && Colid(obs, nextBox));
+      
+      if (index !== -1) {
+        obstaculos.splice(index, 1);
+        somMoeda1()
+      }
+    }
 
+  
+  
+}
 
 
 
@@ -111,14 +172,13 @@ const som1 = new Audio();
 
 class Game {
   constructor() {
+    this.status = "nexLevel";
     this.p = document.querySelector("#p1")
+    this.levelUp = document.querySelector(".level-complete-overlay")
     this.init()
   }
   
   newGame(){
-    
-    
-    
     mundo  = new Mundo();
     //obstaculos = FaseTeste();
    // obstaculos = oterro()
@@ -126,9 +186,11 @@ class Game {
     //obstaculos = sofrimento_Sangrento()
     //obstaculos = espinhos_Sangrentos()
     //obstaculos = gargataColosal()
-    obstaculos = sofrimentoSupremo();
+    //obstaculos = sofrimentoSupremo();
     //obstaculos = tunel();
+    obstaculos = na_Maciota();
     const typ = ["platform", "coluna", "block"]
+   
     obstaculos.forEach(obs => {
       if (typ.includes(obs.type)) {
         mundo.colid.push(obs);
@@ -141,106 +203,61 @@ class Game {
     
   }
   
-  colidPlayerEspinho(){
-    ////colisão com player e espinhos
-    const colidLs = ["spike","spikeTop"]
-    const objPlayer = {
-      x: player.x,
-      y: player.y,
-      w: player.size,
-      h: player.size
-    }
-    
-    //const colidSpike = obstaculos.find(obs => obs.type === "spike" && Colid(objPlayer, obs));
-    const colidSpike = obstaculos.find(obs => {
-      if(!colidLs.includes(obs.type)) return;
-      
-      return Colid(objPlayer, obs);
-    })
-    
-    
-    
-    if (colidSpike) { this.newGame() }
-  }
-  colidLateral(){
-    const tipos = ["platform", "coluna","block"]
-    const nextBoxX = {
-      x: player.x + player.size,
-      y: player.y,
-      w: 4,
-      h: player.size
-    };
-    
-    const colidR = obstaculos.find(obs => {
-      if(tipos.includes(obs.type)){
-      const sideLeft = {x: obs.x,y: obs.y, w: 4,h: obs.h};
-      return Colid(nextBoxX, sideLeft);
-      }
-      
-      return;
-    });
-    
-    
-    if (colidR) {
-      this.newGame();
-    }
-  }
   
-  colidMoedas(){
-    const nextBox = {
-      x: player.x + player.size,
-      y: player.y,
-      w: player.size,
-      h: player.size
-    };
-    
-    
-    const index = obstaculos.findIndex(obs =>obs.type === "moeda" && Colid(obs, nextBox));
-    
-    if (index !== -1) {
-      
-      obstaculos.splice(index, 1);
-      //somMoeda();
-      somMoeda1()
-    }
-    
-    /*
-    const colidM = obstaculos.find(obs =>{
-      if(obs.type !== "moeda") return;
-        
-      if(Colid(obs, nextBox)){
-        obs.y = 0;
-      }
-    })
-    */
-  }
   
   update(){
-    
     mundo.update();
-    obstaculos.forEach(obs => {obs.update();});
+    
+    for (let i = obstaculos.length-1; i >= 0; i--) {
+        var obs = obstaculos[i];
+        
+        obs.update()
+        if(obs.x + obs.w < 0) obstaculos.splice(i, 1)
+    }
     player.update();
     
     
     
     
-    this.colidPlayerEspinho();
-    this.colidLateral();
-    this.colidMoedas()
+    
+    colisoes.colidPlayerEspinho();
+    colisoes.colidLateral();
+    colisoes.colidMoedas()
     
   }
-  draw(){
-     ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
-       
-     
-     
+  
+  
+  jogando(){
+    
      mundo.draw();
      obstaculos.forEach(obs => {obs.draw();});
-     
-     
      player.draw();
      part.add(player.x, player.y+(player.size-2))
      part.part()
+     
+     if(obstaculos.length <= 0){
+       this.status = "nexLevel"
+       //this.levelUp.classList.add("")
+     }
+  } 
+  
+  draw(){
+    ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
+    mundo.draw();
+    
+    if(this.status === "nexLevel"){
+      this.levelUp.classList.add("ativo")
+    }
+    else 
+    if(this.status === "jogando"){
+      this.jogando()
+    }
+    
+    
+     //if(obstaculos.length > 0) this.jogando();
+     //else mundo.draw();
+     
+     
   }
   
   dbug(){
@@ -317,6 +334,18 @@ class Game {
      
     document.body.addEventListener("pointerup", ()=>{
       control.jump = false;
+    })
+    
+    this.levelUp.addEventListener("click", (e)=>{
+        const btn = e.target.closest("button");
+        if(!btn) return;
+        
+        const nome = btn.innerText;
+        if(nome === "NEXT LEVEL"){
+          this.status = "jogando";
+          this.levelUp.classList.remove("ativo")
+          this.newGame()
+        }
     })
   }
 }

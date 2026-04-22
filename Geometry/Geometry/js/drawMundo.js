@@ -3,7 +3,7 @@ let groundOffset = 0;
 
 function drawChao(x, y, w, h) {
   /* velocidade do chão */
-  groundOffset -= 5;
+  groundOffset -= 3;
   
   const size = 40;
   

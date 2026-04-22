@@ -34,27 +34,13 @@ class Mundo {
     
     
     
-    let escala = 0.3;
+
     this.sprites = {
       chao: {
-        sx: 0, 
-        sy: 555, 
-        sw: 1996,
-        sh: 188,
-        
-        
-        v: 5,
-        sub: 1999 * escala, 
-       
         x: 0,
-        x2: 2000 * escala,
-        x3: (2000 * escala) * 2,
-        
-        
-        y: (ctx.canvas.height-(188*escala)),
-        w:  2000 * escala,
-        h: 188 * escala,
-        
+        y: (ctx.canvas.height-(90)),
+        w: ctx.canvas.width,
+        h: 90,
       }
     }
     
@@ -75,21 +61,7 @@ class Mundo {
       const chao = this.sprites.chao;
       
       chao.x -= chao.v;
-     // chao.x2 -= chao.v;
-      //chao.x3 -= chao.v;
-      
-      /*if (chao.x + chao.w <= 0) {
-        chao.x = chao.x3 + chao.w;
-      }
-      
-      if (chao.x2 + chao.w <= 0) {
-        chao.x2 = chao.x + chao.w;
-      }
-      
-      if (chao.x3 + chao.w <= 0) {
-        chao.x3 = chao.x2 + chao.w;
-      }
-      */
+
       
 }
   draw(){
@@ -163,13 +135,12 @@ class Obstacle {
   }
   
   draw() {
-    if (this.type === "block") {
+    if(this.type === "block" && this.x < (ctx.canvas.width)) {
       ctx.fillStyle = "#00ffff";
       ctx.fillRect(this.x, this.y, this.w, this.h);
     }
     else
-    
-    if (this.type === "platform") {
+    if(this.type === "platform" && this.x < ctx.canvas.width) {
       ctx.fillStyle = "#00ffff";
       ctx.fillRect(this.x, this.y, this.w, this.h);
       
@@ -179,7 +150,7 @@ class Obstacle {
       ctx.strokeRect(this.x ,this.y, this.w,this.h)
     }
     else
-    if (this.type === "moeda") {
+    if(this.type === "moeda" && this.x < ctx.canvas.width) {
         const cx = this.x + this.w / 2;
         const cy = this.y + this.h / 2 + this.offsetY;
         const r = this.w / 2;
@@ -204,21 +175,8 @@ class Obstacle {
         
         ctx.restore();
       }
-    /*if (this.type === "moeda") {
-        
-        const cx = this.x + this.w / 2;
-        const cy = this.y + this.h / 2 + this.offsetY;
-        const r = this.w / 2;
-        
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fillStyle = "#FFD700";
-        ctx.fill();
-
-      }*/
-   
     else
-    if (this.type === "coluna") {
+    if(this.type === "coluna" && this.x < ctx.canvas.width) {
       ctx.fillStyle = "#00ffff";
       ctx.fillRect(this.x, this.y, this.w, this.h);
       
@@ -227,12 +185,8 @@ class Obstacle {
       ctx.lineWidth = 2;
       ctx.strokeRect(this.x ,this.y, this.w,this.h)
     }
-
-    
-    
-    
-   else 
-    if(this.type === "spike") {
+    else 
+    if(this.type === "spike" && this.x < ctx.canvas.width) {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y + this.h);
       ctx.lineTo(this.x + this.w / 2, this.y);
@@ -242,7 +196,7 @@ class Obstacle {
       ctx.fill();
     }
     else
-    if(this.type === "spikeTop"){
+    if(this.type === "spikeTop" && this.x < ctx.canvas.width){
         ctx.beginPath();
       // canto superior esquerdo
       ctx.moveTo(this.x, this.y);

@@ -142,6 +142,20 @@ function addColunas(inicio, altura, quantidade, espacamento) {
 
 
 /*********Fazes**********************/
+function na_Maciota() {
+    let init = 600;
+    
+    return [
+      ...addMoeda(init, 4, 10, 2),
+      ...addPlataforma(init, 2, 3, 2),
+      ...addBlocos(init+500, 1, 3,1),
+      ...addBlocos(init+600, 0, 3,1)
+    ]
+}
+
+
+
+
 function oterro() {
   let init = 600;
   

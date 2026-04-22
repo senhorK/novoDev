@@ -40,3 +40,168 @@ canvas{
     image-rendering: pixelated;
     background: #000000;
 }
+
+/*
+.levelUpp{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  border: 1px solid #00FF8D;
+}
+
+.levelUpp .box1{
+  background: #22222200;
+  border: 4px solid #00ff66; 
+  padding: 30px;
+  border-radius: 0px;
+  text-align: center;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+}
+.levelUpp h1{
+  font-size: 20px;
+  font-weight: bolder;
+  color: #fff;
+  animation: pulse 1.5s infinite; 
+  letter-spacing: 2px;
+}
+.levelUpp .startUp p{
+  color: #ffcc00;
+  font-size: 20px;
+  margin: 10px 0;
+}
+.levelUpp .boxBtn{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.levelUpp .antion{
+  
+  font-size: 20px;
+  cursor: pointer;
+  margin: 10px;
+  box-shadow: 0 1px 1px #B4B4B4;
+}
+
+
+
+
+@keyframes pulse {
+  0% { text-shadow: 0 0 10px #00ff66; }
+  50% { text-shadow: 0 0 25px #00ff66;}
+  100% { text-shadow: 0 0 10px #00ff66; }
+}
+*/
+
+
+
+
+/* Container que cobre a tela toda */
+.level-complete-overlay{
+  display: none;
+}
+.level-complete-overlay.ativo {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    font-family: 'Arial Black', sans-serif;
+}
+
+/* A Caixa Principal */
+.level-box {
+    background: #00000000;
+    border: 5px solid #00ff66; /* Verde Neon */
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 255, 102, 0.3);
+    transform: scale(1);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Título com brilho */
+.glow-text {
+    color: #fff;
+    font-size: 38px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px #00ff66;
+    letter-spacing: 2px;
+}
+
+/* Stats (Texto Amarelo clássico) */
+.stats-container {
+    background: rgba(51, 255, 129, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.stats-container p {
+    color: #f1c40f; /* Amarelo */
+    font-size: 18px;
+    margin: 8px 0;
+    font-weight: bold;
+}
+
+.stats-container span {
+    color: #fff;
+}
+
+/* Grupo de Botões */
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Estilo Base dos Botões */
+.btn-action {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.2s;
+    border-bottom: 4px solid rgba(0,0,0,0.3); /* Sombra no botão */
+}
+
+.btn-action.primary {
+    background: #00ff66;
+    color: #000;
+}
+
+.btn-action.secondary {
+    background: #3498db;
+    color: #fff;
+}
+
+/* Efeito de Clique */
+.btn-action:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+}
+
+.btn-action:active {
+    transform: translateY(2px);
+    border-bottom-width: 0;
+}

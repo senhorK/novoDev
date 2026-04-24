@@ -1,0 +1,96 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    
+    align-items: center;
+    font-size: 15pt;
+}
+
+
+.dbug {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    min-width: 280px;
+    padding: 20px;
+    
+    border-radius: 20px;
+    
+    
+    color: #9CFFE1;
+    font-size: 14px;
+    line-height: 1.6;
+    
+    
+    z-index: 999;
+}
+
+
+canvas{
+    background: #959595;
+    image-rendering: pixelated;
+}
+
+
+
+
+
+.stage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+}
+
+.stage .bg {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+
+    display: none;
+
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #48484840,
+            #00000075
+        );
+
+    border: 2px solid rgba(255, 255, 255, 0.19);
+
+    box-shadow:
+        0 0 20px rgba(0, 200, 255, 0.15),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(8px);
+}
+
+/* =========================
+   JOYSTICK KNOB
+========================= */
+
+.stage .joy {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    display: none;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+}

@@ -291,8 +291,8 @@ header {
 
 .card .status{
     position: absolute;
-    top: 0;
-    right: 50px;
+    top: 5px;
+    left: 10px;
     text-decoration: none;
     color: #fff;
     background: #FF0101;
@@ -305,7 +305,14 @@ header {
 .card .status.ativo{
     background: #25FF01;
 }
-
+.card .status p{
+    position: absolute;
+    
+    top: 50%;
+    margin-left: 100%;
+    transform: translateY(-50%);
+    font-size: 10px;
+}
 
 /* =========================
    EFEITOS DE HOVER (ANIMAÇÃO)

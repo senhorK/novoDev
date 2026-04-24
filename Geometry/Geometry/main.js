@@ -5,7 +5,7 @@
 
 
 
-
+ 
 
 const colisoes ={
    
@@ -129,6 +129,7 @@ class Game {
   newGame(){
     mundo  = new Mundo();
     this.lsObs = [
+      Pulo_ei_Falso(),
       na_Maciota(),
       FaseTeste(),
       oterro(),
@@ -146,14 +147,7 @@ class Game {
     
     
     obstaculos = this.lsObs[this.idxObs];
-   // obstaculos = oterro()
-    //obstaculos = tribunalDoCaos()
-    //obstaculos = sofrimento_Sangrento()
-    //obstaculos = espinhos_Sangrentos()
-    //obstaculos = gargataColosal()
-    //obstaculos = sofrimentoSupremo();
-    //obstaculos = tunel();
-    //obstaculos = this.lsObs[this.idxObs];
+
     const typ = ["platform", "coluna", "block"]
    
     obstaculos.forEach(obs => {
@@ -193,7 +187,7 @@ class Game {
       }
     }
     
-    this.p.innerHTML = this.status;
+    this.p.innerHTML = this.idxObs;
   }
   
   
@@ -307,6 +301,8 @@ class Game {
       control.jump = true;
       
       
+      //AUDIO.bg.play()
+      
       //somPuloUooop()
       if (audio.state === "suspended") {
         audio.resume();
@@ -316,6 +312,8 @@ class Game {
      
     document.body.addEventListener("pointerup", ()=>{
       control.jump = false;
+      
+      
     })
     
     
@@ -350,7 +348,7 @@ class Game {
        
        this.level.classList.remove("ativo")
        this.status = "jogando";
-       this.idxObs = Number(nubem);
+       this.idxObs = Number(nubem)-1;
        this.newGame()
     })
     this.levelUp.addEventListener("click", (e)=>{

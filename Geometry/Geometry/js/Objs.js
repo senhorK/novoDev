@@ -226,7 +226,7 @@ class Player {
     this.jump = true;
     this.inAr = true;
     
-    this.maxJump = 2;
+    this.maxJump = 1;
     this.jjump = this.maxJump;
     
     this.vboot = 0;

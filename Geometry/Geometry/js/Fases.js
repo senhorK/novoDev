@@ -141,7 +141,53 @@ function addColunas(inicio, altura, quantidade, espacamento) {
 }
 
 
+
+
+
+
+
+
+
 /*********Fazes**********************/
+function Pulo_ei_Falso() {
+    let init = 600;
+    let init1 = 3200;
+
+    return [
+        ////Zig zag 
+        
+        ...addMoeda(init, 0, 10, 10),
+        ...addColunas(init+150, 0, 10, 10),
+        ...addBlocos(init, 3, 10, 10),
+        ...addSpikesR(init, 2, 10, 10),
+      
+      
+        ...addSpikes(init+ init1+380, 0, 80, 2),
+
+        
+        ...addBlocos(init+init1+380, 2, 1, 1),
+        ...addMoeda(init+ init1+380, 4, 1, 2),
+        
+        ...addBlocos(init+init1+580, 3, 1, 1), 
+        ...addMoeda(init+ init1+580, 6, 1, 2),
+        
+        ...addBlocos(init+init1+780, 4, 1, 1),
+        ...addMoeda(init+ init1+780, 8, 1, 2),
+        
+        ...addBlocos(init+init1+1000, 2, 1, 1),
+        ...addMoeda(init+ init1+100, 4, 1, 2),
+      /*  ...addBlocos(init+1200, 3, 15, 8),*/
+        ...addBlocos(init+init1+1200, 3, 10, 15),
+        ...addMoeda(init+ init1+1200, 4, 10, 15),
+        ...addBlocos(init+init1+1450, 4, 10, 15),
+        ...addMoeda(init+ init1+1450, 5, 10, 15),
+    ];
+}
+
+
+
+
+
 function na_Maciota() {
     let init = 600;
     
@@ -152,10 +198,6 @@ function na_Maciota() {
       ...addBlocos(init+600, 0, 3,1)
     ]
 }
-
-
-
-
 function oterro() {
   let init = 600;
   
@@ -203,10 +245,6 @@ function oterro() {
     
   ];
 }
-
-
-
-
 function tunel() {
    let init = 500;
    let space = 7;
@@ -366,11 +404,6 @@ function sofrimentoSupremo() {
 
   ];
 }
-
-
-
-
-
 function espinhos_Sangrentos() {
   let fase = [];
   let base = 600; // Um ponto de partida no X para a fase começar
@@ -590,7 +623,6 @@ function sofrimento_Sangrento() {
 
   ];
 }
-
 function gargataColosal() {
     let init = 800;
     

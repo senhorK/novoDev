@@ -1,0 +1,6 @@
+<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  
+  <path d="M10 35 H25 Q35 35 35 25 Q35 15 25 15 H15 Q5 15 5 25 L5 35" 
+        stroke="#00ff66" stroke-width="4" fill="none" filter="url(#glow)" stroke-linecap="round"/>
+  <circle cx="8" cy="28" r="2" fill="white" filter="url(#glow)"/>
+</svg>

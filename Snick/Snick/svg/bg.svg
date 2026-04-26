@@ -1,0 +1,30 @@
+<svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .snake-path {
+      /* Criamos um rastro onde o espaço vazio é igual ao desenho */
+      stroke-dasharray: 60; 
+      stroke-dashoffset: 120;
+      animation: rastejarSuave 10s linear infinite;
+    }
+    
+    .head {
+      animation: brilhoCabeca 2s ease-in-out infinite;
+    }
+
+    @keyframes rastejarSuave {
+      0% {
+        stroke-dashoffset: 120;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    
+  </style>
+  
+  <path class="snake-path" d="M5.5 19C4.11929 19 3 17.8807 3 16.5C3 15.1193 4.11929 14 5.5 14H14.5C15.8807 14 17 12.8807 17 11.5C17 10.1193 15.8807 9 14.5 9H9.5C8.11929 9 7 7.8807 7 6.5C7 5.11929 8.11929 4 9.5 4H18.5C19.8807 4 21 5.11929 21 6.5C21 7.8807 19.8807 9 18.5 9" 
+        stroke="#00ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <circle class="head" cx="18.5" cy="6.5" r="1.5" fill="#fff"/>
+</svg>

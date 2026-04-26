@@ -55,21 +55,12 @@ class Camera {
   
   draw() {}
 }
-
 class Mundo {
   constructor() {
     this.x = 0;
     this.y = 0;
     this.w = 1000;
     this.h = 1000;
-    
-    this.borda1 = { x: 0, y: 0, w: 2, h: 1000 }
-    this.borda2 = { x: 0, y: 0, w: 1000, h: 2 }
-    this.borda3 = { x: 1000, y: 0, w: 2, h: 1000 }
-    this.borda4 = { x: 0, y: 1000, w: 1000, h: 2 }
-    
-    
-    
   }
   
   
@@ -77,7 +68,7 @@ class Mundo {
     if (!camera.isVisible(this)) return;
     
     ctx.lineWidth = 4;
-    ctx.strokeStyle = "#00ffff";
+    ctx.strokeStyle = "#FFFFFF42";
     
     ctx.strokeRect(
       this.x,
@@ -88,11 +79,6 @@ class Mundo {
   }
   
 }
-
-
-
-
-
 class newComida {
   constructor() {
     this.x = Math.random() * 1000;
@@ -131,154 +117,6 @@ class Comida {
     
   }
 }
-
-
-/*class Snick {
-  constructor() {
-    this.x = 200;
-    this.y = 200;
-    
-    this.size = 15;
-    this.w = 15;
-    this.h = 15;
-    this.calda = [];
-    this.tamanho = 1;
-    this.speed = 0.1;
-  }
-  
-
-
-  
-  
-  update() {
-   this.x += stick.subX * this.speed;
-   this.y += stick.subY * this.speed;
-  
-   if(this.x < 0) this.x = 0;
-   if(this.y < 0) this.y = 0;
-   if(this.x + this.size  > 1000)  this.x = 1000 - this.size;
-   if(this.y + this.size  > 1000)  this.y = 1000 - this.size;
-  
- 
-  
-
-    
-  
-
-  
-  
-  
-
-  
-  
-  let last = this.calda[0];
-  
-  if (!last) {
-    this.calda.unshift({
-      x: this.x,
-      y: this.y
-    });
-  } 
-  else {
-    let dx = this.x - last.x;
-    let dy = this.y - last.y;
-    
-    let dist = Math.sqrt(dx * dx + dy * dy);
-    
-    // só adiciona se andou suficiente
-    if (dist > this.w/2) {
-      this.calda.unshift({
-        x: this.x,
-        y: this.y
-      });
-    }
-  }
-  
-  if (this.calda.length > this.tamanho) {
-    this.calda.pop();
-  }
-  
-  
-}
-  
-  
-  
-  
-  draw() {
- 
-  for (let i = this.calda.length - 1; i >= 0; i--) {
-    let x = this.calda[i].x;
-    let y = this.calda[i].y;
-    
-    
-    let alpha = 1 + (i / this.calda.length) * 0.1;
-    
-    //ctx.fillStyle = `rgba(0, 180, 255, ${alpha})`;
-    ctx.fillStyle = `rgba(0, 180, 255, 1)`;
-
-    ctx.strokeStyle = "rgba(255,255,255,0.15)";
-    ctx.lineWidth = 2;
-    
-    ctx.beginPath();
-    ctx.arc(
-      x,
-      y,
-      this.w / 2,
-      0,
-      Math.PI * 2
-    );
-    ctx.fill();
-    ///ctx.stroke();
-  }
-  
-
-  ctx.shadowBlur = 0;
-  ctx.shadowColor = "rgba(0,255,100,0.8)";
-  
-  ctx.fillStyle = "#00ff88";
-  ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth = 2;
-  
-  ctx.beginPath();
-  ctx.arc(
-    this.x,
-    this.y,
-    this.w / 2,
-    0,
-    Math.PI * 2
-  );
-  ctx.fill();
-  ctx.stroke();
-  
-  
-  ctx.fillStyle = "#111";
-  
-  ctx.beginPath();
-  ctx.arc(
-    this.x - 6,
-    this.y - 4,
-    2,
-    0,
-    Math.PI * 2
-  );
-  ctx.arc(
-    this.x + 6,
-    this.y - 4,
-    2,
-    0,
-    Math.PI * 2
-  );
-  ctx.fill();
-  
-  
-  ctx.shadowBlur = 0;
-}
-
-  
-
-}*/
-
-
 class Snick {
   constructor(x, y,modo) {
     this.x = x;
@@ -297,7 +135,8 @@ class Snick {
     this.tamanho = 5;
     
     this.modo = modo;
-    this.color = "#F00"
+    this.lsCores = ["#FFFFFF", "#0015FF","#6370FF","#63FF71","#FFFD63","#FFA763","#F363FF"];
+    this.color = this.lsCores[Math.floor(Math.random() * this.lsCores.length)];
   }
   
   update() {
@@ -353,12 +192,8 @@ class Snick {
     let y = this.calda[i].y;
     
     
-    let alpha = 1 + (i / this.calda.length) * 0.1;
-    
-    if(this.modo === "but") ctx.fillStyle = `rgba(0, 180, 255, 1)`;
-    else{
-      ctx.fillStyle = `#f00`;
-    }
+
+    ctx.fillStyle = this.color;
     ctx.strokeStyle = "rgba(255,255,255,0.15)";
     ctx.lineWidth = 2;
     
@@ -414,7 +249,74 @@ class Snick {
 
 
 
-
+/*
+class SnakeAI {
+  constructor(snake) {
+    this.snake = snake;
+    this.target = null;
+  }
+  
+  update() {
+    this.findClosestFood();
+    
+    if (!this.target) return;
+    
+    let dx = this.target.x - this.snake.x;
+    let dy = this.target.y - this.snake.y;
+    
+    let dist = Math.sqrt(dx * dx + dy * dy);
+    
+    if (dist > 0) {
+      this.snake.subX = dx / dist;
+      this.snake.subY = dy / dist;
+    }
+    
+    
+    if (dist < 20) {
+      this.eatFood();
+    }
+  }
+  
+  findClosestFood() {
+    let menor = Infinity;
+    let alvo = null;
+    
+    for (let food of comida.ls) {
+      let dx = food.x - this.snake.x;
+      let dy = food.y - this.snake.y;
+      
+      let dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < menor) {
+        menor = dist;
+        alvo = food;
+      }
+    }
+    
+    this.target = alvo;
+  }
+  
+  eatFood() {
+    let index = comida.ls.indexOf(this.target);
+    
+    if (index !== -1) {
+      comida.ls.splice(index, 1);
+      
+      
+      this.snake.tamanho += 2;
+      
+      comida.ls.push(new newComida());
+    }
+    
+    this.target = null;
+  }
+  
+  
+  
+  
+  
+}
+*/
 class SnakeAI {
   constructor(snake) {
     this.snake = snake;
@@ -482,19 +384,32 @@ class SnakeAI {
   
   
 }
-let snakes = [new Snick(100,100,"player")];
-let bots = [];
 
-for (let i = 0; i < 10; i++) {
-  let s = new Snick(
-    Math.random() * 1000,
-    Math.random() * 1000,
-    "but"
-  );
 
-  let ai = new SnakeAI(s);
 
-  snakes.push(s);
-  bots.push(ai);
+
+class AddSnike {
+  constructor(total) {
+    this.total    = total;
+    this.snake    = [];
+    this.bots     = [];
+    
+    
+    
+    this.snake = [new Snick(100, 100, "player")];
+  
+    
+    for (let i = 0; i < this.total; i++) {
+      let s = new Snick(Math.random() * 1000, Math.random() * 1000,"but");
+      
+      let ai = new SnakeAI(s);
+      
+      this.snake.push(s);
+      this.bots.push(ai);
+    }
+    
+  }
 }
+
+
 

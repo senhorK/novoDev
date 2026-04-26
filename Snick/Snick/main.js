@@ -25,78 +25,57 @@ var snick;
 var groud;
 var comida;
 var camera;
+var SNAKES;
+
+
+
 class Game {
   constructor() {
-    
-    
+    this.menu   = document.querySelector(".menu")
+    this.status = "menu";
     this.init()
   }
   
   newGame(){
-    mundo  = new Mundo();
-    //snick  = new Snick(100,100,"player");
-    comida = new Comida();
-    camera = new Camera();
-    camera.follow(snakes[0]);
-    
-    
+    mundo      = new Mundo();
+    comida     = new Comida();
+    camera     = new Camera();
+    SNAKES    = new AddSnike(10);
+    camera.follow(SNAKES.snake[0]);
   }
   
   
-  update(){
-    //snick.update();
-    comida.update();
-    camera.update();
-    
-    /*const player = snakes.find(s => s.modo === "player");
-    
-    if(player) {const index = comida.ls.findIndex(food => Colid(food, player));
-    if(index !== -1) {
-    comida.ls.splice(index, 1);
-    player.tamanho++;
-    somPuloUooop();
-  }
-}*/
-    if(snakes[0].modo != "but"){
-      let obj = snakes[0];
+  
+  miComida(){
+    if(SNAKES.snake[0].modo != "but"){
+      let obj = SNAKES.snake[0];
       
       const index   = comida.ls.findIndex(obs =>  Colid(obs, obj));
-      if (index !== -1) {
+      if(index !== -1) {
         comida.ls.splice(index, 1);
         obj.tamanho++;
         somPuloUooop()
       }
     }
-    
-    /*const psSnick = {
-      x: snick.x,
-      y: snick.y,
-      w: snick.size,
-      h: snick.size
-    }*/
-   /* const index   = comida.ls.findIndex(obs =>  Colid(obs, psSnick));
-    
-    if(index !== -1) {
-       comida.ls.splice(index, 1);
-       snick.tamanho++;
-       somPuloUooop()
-    }*/
-    
-    for(let bot of bots) {bot.update();}
-    for(let snake of snakes) {snake.update();}
-    
-    for(let i = snakes.length - 1; i >= 0; i--) {
-        let snake = snakes[i];
+  }
+  Ia_Snike(){
+    //Updete Bots
+    for(let bot of SNAKES.bots) {bot.update();}
+    //Update Snick 
+    for(let snake of SNAKES.snake) {snake.update();}
+    // Colisão entre Snick 
+    for(let i = SNAKES.snake.length - 1; i >= 0; i--){
+        let snake = SNAKES.snake[i];
         
-        
-        if(snake.checkCollision(snakes)) {
-            snakes.splice(i, 1);
+        if(snake.checkCollision(SNAKES.snake)){
+            if(snake.modo === "player"){
+               this.status = "menu";
+               this.menu.classList.add("ativo")
+            }
+            
+            else SNAKES.snake.splice(i, 1);
         }
         
-        //mi
-        /*if(snick.checkCollision(snakes)) {
-          console.log("player morreu 💀");
-        }*/
         
         
         
@@ -104,33 +83,46 @@ class Game {
         
     }
 
+  }
+  
+  
+  update(){
+    comida.update();
+    camera.update();
+    
+    this.miComida();  
+    this.Ia_Snike();
+    
+        
+    
     dbug.innerHTML =`
       camX: ${camera.x} <br>
       camY: ${camera.y}
     `
   }
+  
+  
+  
+  
+  
   draw(){
-    ctx.fillStyle = "#0000004A";
-    ctx.fillRect(0,0,lar,alt);
-    
+    ctx.clearRect(0,0,lar, alt)
   
     camera.begin();
-        ctx.fillStyle = "#f00"
-        ctx.fillRect(100, 100, 50, 50)
-        mundo.draw();
-        comida.draw();
-        //snick.draw()
-        
-        
-        
-        for(let snake of snakes) { snake.draw();}
+         ctx.fillStyle = "#f00"
+         ctx.fillRect(100, 100, 50, 50)
+         mundo.draw();
+         comida.draw();
+         
+         for (let snake of SNAKES.snake) { snake.draw(); }
     camera.end()
-    
+        
   }
   loop = ()=>{
-    this.update();
-    this.draw();
-    
+    if(this.status === "jogando"){
+       this.update();
+       this.draw();
+    }
     window.requestAnimationFrame(this.loop)
   }
   
@@ -148,7 +140,19 @@ class Game {
     this.newGame();
     this.loop()
    
-   
+    
+    this.menu.addEventListener("click", (e)=>{
+        const btn = e.target.closest("p");
+        if(!btn) return;
+        
+        if(btn.id === "btnPlay"){
+          this.status = "jogando";
+          this.menu.classList.remove("ativo")
+          btnPlay.innerHTML = "▶ newGame"
+          
+          this.newGame()
+        }
+    })
   }
 }
 

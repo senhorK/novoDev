@@ -68,7 +68,7 @@ class Mundo {
     if (!camera.isVisible(this)) return;
     
     ctx.lineWidth = 4;
-    ctx.strokeStyle = "#FFFFFF42";
+    ctx.strokeStyle = "#FFFFFF20";
     
     ctx.strokeRect(
       this.x,
@@ -249,7 +249,7 @@ class Snick {
 
 
 
-/*
+
 class SnakeAI {
   constructor(snake) {
     this.snake = snake;
@@ -271,7 +271,7 @@ class SnakeAI {
       this.snake.subY = dy / dist;
     }
     
-    
+    ///se chegou perto → come 
     if (dist < 20) {
       this.eatFood();
     }
@@ -285,72 +285,9 @@ class SnakeAI {
       let dx = food.x - this.snake.x;
       let dy = food.y - this.snake.y;
       
-      let dist = Math.sqrt(dx * dx + dy * dy);
-      
-      if (dist < menor) {
-        menor = dist;
-        alvo = food;
-      }
-    }
-    
-    this.target = alvo;
-  }
-  
-  eatFood() {
-    let index = comida.ls.indexOf(this.target);
-    
-    if (index !== -1) {
-      comida.ls.splice(index, 1);
       
       
-      this.snake.tamanho += 2;
       
-      comida.ls.push(new newComida());
-    }
-    
-    this.target = null;
-  }
-  
-  
-  
-  
-  
-}
-*/
-class SnakeAI {
-  constructor(snake) {
-    this.snake = snake;
-    this.target = null;
-  }
-  
-  update() {
-    this.findClosestFood();
-    
-    if (!this.target) return;
-    
-    let dx = this.target.x - this.snake.x;
-    let dy = this.target.y - this.snake.y;
-    
-    let dist = Math.sqrt(dx * dx + dy * dy);
-    
-    if (dist > 0) {
-      this.snake.subX = dx / dist;
-      this.snake.subY = dy / dist;
-    }
-    
-    /* se chegou perto → come */
-    if (dist < 20) {
-      this.eatFood();
-    }
-  }
-  
-  findClosestFood() {
-    let menor = Infinity;
-    let alvo = null;
-    
-    for (let food of comida.ls) {
-      let dx = food.x - this.snake.x;
-      let dy = food.y - this.snake.y;
       
       let dist = Math.sqrt(dx * dx + dy * dy);
       
@@ -396,7 +333,7 @@ class AddSnike {
     
     
     
-    this.snake = [new Snick(100, 100, "player")];
+    this.snake = [new Snick(500, 500, "player")];
   
     
     for (let i = 0; i < this.total; i++) {

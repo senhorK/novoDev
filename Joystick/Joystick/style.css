@@ -1,0 +1,74 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-size: 15pt;
+    background: #252525;
+}
+
+.p1{
+    position: absolute;
+    z-index: 100;
+    color: #FFFFFF;
+    font-size: 10px;
+}
+
+.Stage{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    display: none;
+    background: transparent;
+    touch-action: none;
+}
+.Stage1{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    left: 0px;
+    background: transparent;
+    touch-action: none;
+}
+.Stage2{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    right: 0px;
+    background: transparent;
+    touch-action: none;
+}
+
+
+.joyBg{
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    top: 50%;
+    display: none;
+    transform: translate(-50%,-50%);
+    border-radius: 100%;
+    border: 1px solid #E2E2E2;
+    background: url("./icon/back.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.joyjoy{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 50%;
+    top: 50%;
+    display: none;
+    transform: translate(-50%,-50%);
+    border-radius: 100%;
+    border: 1px solid #E2E2E2;
+    background: #9170CC;
+}
+

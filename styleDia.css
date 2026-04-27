@@ -319,24 +319,31 @@ header {
     transform: scale(1.03);
 }
 
-.status {
+.card .status{
     position: absolute;
-    top: 14px;
-    right: 14px;
-
-    padding: 5px 10px;
-    border-radius: 999px;
-
-    font-size: 12px;
-    font-weight: 700;
-
-    background: #ff4d4d;
-    color: white;
+    top: 5px;
+    left: 10px;
+    text-decoration: none;
+    color: #fff;
+    background: #FF0101;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+.card .status.ativo{
+    background: #25FF01;
+}
+.card .status p{
+    position: absolute;
+    
+    top: 50%;
+    margin-left: 100%;
+    transform: translateY(-50%);
+    font-size: 10px;
 }
 
-.status.ativo {
-    background: #22c55e;
-}
 
 /* =========================
    FOOTER

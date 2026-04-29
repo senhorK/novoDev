@@ -1,0 +1,70 @@
+
+
+@font-face {
+    font-family: "fire code";
+    src: url(/font/FiraCode-VariableFont_wght.ttf);
+}
+@font-face{
+    font-family: "fire bold";
+    src: url(/font/FiraCode-Bold.ttf);
+}
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-size: 15pt;
+    background: #252525;
+}
+
+
+
+canvas{
+    position: absolute;
+    /*background-image: url(/icon/bgg.jpg);
+    background-size: cover;*/
+    image-rendering: pixelated;
+}
+
+
+.menu{
+    display: none;
+}
+.menu.ativo{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #888888;
+    z-index: 1000;
+}
+.menu .title{
+    font-size: 50px;
+    font-weight: bold;
+   /* font-family: "fire code";*/
+    color: #FFFFFF;
+}
+.menu .box{
+    
+    margin-top: 20px;
+}
+.menu p{
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: "fire bold";
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+.menu p:hover {
+    color: #6A007D;
+    transform: scale(1.2);
+    
+}
+

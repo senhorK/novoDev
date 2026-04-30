@@ -2,7 +2,8 @@
 
 
 
-
+//const img = new Image();
+     // img.src = "/img/nave1.png"
 class Colisoes {
   constructor() {
     
@@ -33,11 +34,15 @@ class Colisoes {
                  player.score+= 100;
                  part.add(enemy.x,enemy.y,20, "#f00")
                  somExplosaoPesada();
+                 
+                 drop.is(enemy.x,enemy.y);
+                 
                  eny.splice(j, 1);
                  
+                 
                  if(Inimigos.length <= 0){
-                   main.idxF++;
-                   status.modo = "vinheta"
+                    if(main.idxF <= main.Danges.length) main.idxF++;
+                      status.modo = "vinheta"
                  }
                }
                break;
@@ -101,6 +106,137 @@ const vinheta ={
 }
 
 
+
+function getArmaAleatoria(atual) {
+  let i;
+
+  do {
+    i = Math.floor(Math.random() * Arsenal.armas.length);
+  } while (i === atual); // evita repetir
+
+  return i;
+}
+
+class DropItem {
+  constructor({ x, y, tipo = "ammo_leve" }) {
+    this.x = x;
+    this.y = y;
+    this.w = 20;
+    this.h = 20;
+    this.tipo = tipo;
+    this.ativo = true;
+  }
+  
+
+  apply(player) {
+     if(this.tipo === "f1") Arsenal.atual = 0;
+     else  
+     if(this.tipo === "f2") Arsenal.atual = 1;
+     else  
+     if(this.tipo === "f3") Arsenal.atual = 2;
+     else  
+     if(this.tipo === "f4") Arsenal.atual = 3;
+     else  
+     if(this.tipo === "s") Arsenal.atual = 4;
+
+
+
+    //if (this.tipo === "arma") {
+    //player.arma = getArmaAleatoria(player.arma);
+    //Arsenal.atual = getArmaAleatoria(Arsenal.atual);
+  //}
+}
+  
+  draw() {
+    if (!this.ativo) return;
+     
+     let cor;
+     if(this.tipo === "f1") cor = "#fff";
+     else  
+     if(this.tipo === "f2") cor = "#f00";
+     else  
+     if (this.tipo === "f3") cor = "#F8FF14";
+     else
+     if (this.tipo === "f4") cor = "#14FF14";
+     else cor = "#E27DFF";
+      
+    
+    // 👇 centraliza o texto
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    app.draw.text({
+      ctx,
+      txt: this.tipo,
+      x: this.x + this.w / 2,
+      y: this.y + this.h / 2,
+      font: "30px Arial",
+      cor: cor
+    });
+
+    // 👇 volta ao padrão (importante)
+    ctx.textAlign = "start";
+    ctx.textBaseline = "alphabetic";
+  }
+  
+
+}
+class DropManager {
+  constructor() {
+    this.lista = [];
+    this.typos = [
+      "f1","f2","f3","f4","s",
+    ]
+  }
+  Colid(rect1, rect2) {
+      return (
+        rect1.x + rect1.w > rect2.x &&
+        rect1.x < rect2.x + rect2.w &&
+        rect1.y + rect1.h > rect2.y &&
+        rect1.y < rect2.y + rect2.h);
+    }
+  
+  
+  add(x, y, tipo) {
+    let t = this.typos[Math.floor(Math.random() * this.typos.length)];
+    this.lista.push(new DropItem({ x, y, tipo: t}));
+  }
+  
+  is(x,y){
+    if(Math.random() < 0.2) {
+        //const tipo = Math.random();
+  
+       /* if (tipo < 0.6) this.add(x, y, "ammo");
+        else if (tipo < 0.9) this.add(x, y, "vida");
+        else*/ 
+        this.add(x, y, "arma");
+     }
+  }
+  
+  update(player) {
+    for (let i = this.lista.length - 1; i >= 0; i--) {
+      const drop = this.lista[i];
+      
+      if(this.Colid(player, drop)) {
+        drop.apply(player);
+        this.lista.splice(i, 1);
+      }
+    }
+  }
+  
+  draw() {
+    for (let d of this.lista) {
+      d.draw();
+    }
+  }
+}
+
+
+
+
+
+
+
 var lar = window.innerWidth;
 var alt = window.innerHeight;
 var ctx;
@@ -119,6 +255,8 @@ var camera;
 var colisao;
 var part;
 var Inimigos;
+var drop;
+
 
 
 class Main{
@@ -148,26 +286,27 @@ class Main{
     
     part    = new Part();
     colisao = new Colisoes();
+    drop = new DropManager();
   }
   draw(){
      ctx.clearRect(0,0,lar,alt)
     
      app.camera.begin(ctx);
      mundo.draw()
-     app.draw.rect({ctx,x: 100, y: 100, w: 30, h: 30, cor: "#f00"})
+     //app.draw.rect({ctx,x: 100, y: 100, w: 30, h: 30, cor: "#f00"})
      
      for(let e of Inimigos) {e.draw()}
 
      player.draw();
      part.part()
+     drop.draw();
      
      
-          
      
      app.camera.end(ctx)
      
      player.drawLife();
-     
+     drop.update(player)
      
      status.draw(player)
   }
@@ -206,13 +345,14 @@ class Main{
         ctx.canvas.height = alt;
         ctx.canvas.style.width  = lar +"px";
         ctx.canvas.style.height = alt +"px";
-
+        
     })
   }
   
   init(){
     ctx = document.querySelector("canvas").getContext("2d");    
     this.resize();
+    
     
     ctx.canvas.width  = lar;
     ctx.canvas.height = alt;
@@ -258,7 +398,10 @@ class Main{
 }
 
 
-const main = new Main();
+var main = new Main();
+/*img.onload = ()=>{
+  
+}*/
 
 
 

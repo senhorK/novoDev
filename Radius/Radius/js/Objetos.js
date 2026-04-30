@@ -68,15 +68,6 @@ class Part {
       }
     }
   }
-  
-  /*part(){
-     this.ls.forEach((p,i) =>{
-        p.update()
-        p.draw()
-        
-        if(p.life <= 0) this.ls.splice(i,1)
-     })
-  }*/
 }
 
 
@@ -95,6 +86,42 @@ class Mundo {
     //ctx.strokeRect(this.x , this.y, this.w, this.h);
   }
 }
+
+const Arsenal = {
+  atual: 0,
+  armas: [
+    {
+      nome: "calibre1",
+      fire(player){
+        calibre1(player)}
+      },
+    {
+      nome: "calibre2",
+      fire(player) {
+        calibre2(player)
+      }
+    },
+    
+    {
+      nome: "tiro2",
+      fire(player) {
+        calibre3(player);
+      }
+    },
+    {
+      nome: "tiro3",
+      fire(player) {
+        calibre4(player);
+      }
+    },
+    {
+      nome: "leque3",
+      fire(player) {
+        leque3(player);
+      }
+    }
+  ],
+};
 class Balas {
   constructor(o) {
     this.x = o.x;
@@ -102,6 +129,7 @@ class Balas {
     this.w = o.w;
     this.h = o.h;
     this.c = o.c;
+    
     
     this.rot = o.rot;
     this.speed = 8;
@@ -120,7 +148,7 @@ class Balas {
   ctx.translate(this.x, this.y);
   ctx.rotate(this.rot + Math.PI/2);
   
-  ctx.fillStyle = "#f00";
+  ctx.fillStyle = this.c;
   ctx.fillRect(0, 0, this.w, this.h);
   
   ctx.restore();
@@ -138,7 +166,9 @@ class Player {
     this.rot2 = 0;
     this.offsetRot = Math.PI / 7;
     this.balas = [];
-    this.cdTiro = 10;
+    this.disparoMinuto = 10;
+    this.cdTiro = this.disparoMinuto;;
+    
     this.life = 100;
     this.vivo = true;
     this.cor = "#f00"
@@ -151,12 +181,15 @@ class Player {
        Math.PI * 0.9,
        Math.PI * 1.6
      ];
+     
+     this.ammo = 0;
+     this.arma = 0;
   }
   
   
 
   
-  add() {
+  /*add() {
       const offset = this.size / 2 + 20;
       const bx = this.x + Math.cos(this.rot) * offset;
       const by = this.y + Math.sin(this.rot) * offset;
@@ -169,8 +202,21 @@ class Player {
         rot: this.rot
       }));
       
+      
+      this.balas.push(new Balas({
+        x: bx + 20,
+        y: by + 20,
+        w: 3,
+        h: 10,
+        rot: this.rot
+      }));
+      
       part.add(bx,by, 1, "#DC60FF")
-}
+}*/
+  add(){
+    Arsenal.armas[Arsenal.atual].fire(this)
+    //Arsenal.armas[4].fire(this)
+  }
   
   update(){
     if(!this.vivo) return;
@@ -191,7 +237,7 @@ class Player {
         this.add();
        // somTiro();
         somLaize()
-        this.cdTiro = 5;
+        this.cdTiro = this.disparoMinuto;
         
      }
      
@@ -236,7 +282,7 @@ class Player {
       
       
       
-      Player5({
+      Player2({
         x:  this.x,
         y:  this.y,
         rot: this.rot,
@@ -350,7 +396,7 @@ class criarEnemy {
     
     this.vx = (Math.random() - 0.5) * 2;
     this.vy = (Math.random() - 0.5) * 2;
-    this.speed = speed;
+    this.speed = 2;
     this.timeMove = 0;
     this.visao = false;
     this.dbug = false;
@@ -570,7 +616,7 @@ function fase3() {
     fase: "FASE III",
     enemies: [
       ...enemyBase({
-        total: 8,
+        total: 10,
         typo: "base",
         life: 150,
         range: 250
@@ -592,14 +638,14 @@ function fase4() {
     fase: "FASE IV",
     enemies: [
       ...enemyBase({
-        total: 7,
+        total: 15,
         typo: "base",
         life: 200,
         speed: 3
       }),
       
       ...enemyBase({
-        total: 7,
+        total: 10,
         typo: "tri",
         life: 250,
         speed: 4
@@ -614,7 +660,7 @@ function fase5() {
     fase: "FASE V",
     enemies: [
       ...enemyBase({
-        total: 10,
+        total: 20,
         typo: "base",
         life: 250,
         speed: 3.5,
@@ -622,7 +668,7 @@ function fase5() {
       }),
       
       ...enemyBase({
-        total: 10,
+        total: 15,
         typo: "tri",
         life: 300,
         speed: 5,
@@ -640,11 +686,11 @@ function bossStage() {
       ...enemyBase({
         total: 1,
         typo: "boss",
-        w: 150,
-        h: 150,
+        w: 100,
+        h: 100,
         life: 5000,
         speed: 3,
-        range: 500,
+        range: 1000,
         cor: "#f00"
       }),
       

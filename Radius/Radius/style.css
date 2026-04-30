@@ -17,17 +17,23 @@
 }
 
 
+/* Importando uma fonte gamer/tech */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
 body {
-    font-size: 15pt;
-    background: #252525;
+    background-color: #0a0a0c;
+    color: #e0e0e0;
+   /* font-family: 'JetBrains+Mono', monospace;*/
+   user-select: none;
 }
+
 
 
 
 canvas{
     position: absolute;
-    /*background-image: url(/icon/bgg.jpg);
-    background-size: cover;*/
+    background-image: url(/icon/gono.svg);
+    
     image-rendering: pixelated;
 }
 
@@ -68,3 +74,164 @@ canvas{
     
 }
 
+
+
+/*
+.Info {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 2000;
+    box-sizing: border-box;
+}
+
+.Info h2 {
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.roadmap {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.roadmap h3 {
+    color: #6AFF82;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-left: 4px solid #6AFF82;
+    padding-left: 10px;
+}
+
+.roadmap h3:first-child {
+    margin-top: 0;
+}
+
+.roadmap p {
+    color: #e0e0e0;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    padding-left: 15px;
+}
+
+.Info button {
+    margin-top: 30px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background: #6AFF82;
+    color: #111;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.Info button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(106, 255, 130, 0.4);
+}
+*/
+
+
+
+
+.Info{
+    display: none;
+}
+.Info.ativo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: rgba(20, 20, 25, 0.95);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.05);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 2000;
+}
+
+.Info h2 {
+    text-align: center;
+    color: #00f2ff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    border-bottom: 2px solid #00f2ff;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+}
+
+/* Grid para organizar as categorias do Roadmap */
+.roadmap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.Info h3 {
+    color: #ff0055; /* Cor de destaque para os títulos */
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    border-left: 3px solid #ff0055;
+    padding-left: 10px;
+    text-transform: uppercase;
+}
+
+.Info p {
+    line-height: 1.8;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    border-radius: 5px;
+    color: #aaa;
+}
+
+/* Estilizando o que já está pronto [✔] */
+.Info p {
+    white-space: pre-line; /* Mantém as quebras de linha do HTML */
+}
+
+/* Estilo do Botão */
+.Info button {
+    display: block;
+    width: 200px;
+    margin: 20px auto 0;
+    padding: 12px;
+    background: transparent;
+    color: #00f2ff;
+    border: 1px solid #00f2ff;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.Info button:hover {
+    background: #00f2ff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+}

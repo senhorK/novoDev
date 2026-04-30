@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Radius</title>
+  <title>HTML</title>
   
   <!-- HTML -->
   
@@ -15,18 +15,84 @@
   <link rel="stylesheet" href="./joy.css">
 </head>
 
-<body>
+<body onclick="fullScreen();">
   
    <canvas></canvas>
    
-   
+   <div class="Info">
+  <h2>RADIUS — Roadmap</h2>
+  
+  <div class="roadmap">
+    
+    <h3>PLAYER</h3>
+    <p>
+      [✔] Movimento <br>
+      [✔] Inércia <br>
+      [✔] Tiros <br>
+      [✔] Vida <br>
+      [✔] Score <br>
+      [ ] Dash <br>
+      [ ] Upgrade de arma <br>
+      [ ] Especial
+    </p>
+    
+    <h3>INIMIGOS</h3>
+    <p>
+      [✔] Patrulha <br>
+      [✔] Campo de visão <br>
+      [✔] Ataque ao player <br>
+      [✔] Colisão bala/inimigo <br>
+      [ ] Inimigo sniper <br>
+      [ ] Inimigo tanque <br>
+      [ ] Inimigo explosivo
+    </p>
+    
+    <h3>BOSS</h3>
+    <p>
+      [✔] Estrutura visual <br>
+      [✔] Órbita de triângulos <br>
+      [ ] Segunda fase <br>
+      [ ] Ataque especial <br>
+      [ ] Summon de inimigos
+    </p>
+    
+    <h3>FASES</h3>
+    <p>
+      [✔] Sistema de fases <br>
+      [✔] Vinheta inicial <br>
+      [ ] Transição entre fases <br>
+      [ ] Boss Stage <br>
+      [ ] Victory Screen
+    </p>
+    
+    <h3>MENU</h3>
+    <p>
+      [✔] Tela inicial <br>
+      [✔] Hover <br>
+      [ ] Configurações <br>
+      [ ] Sons ON/OFF
+    </p>
+    
+    <h3>SISTEMA</h3>
+    <p>
+      [✔] Camera <br>
+      [✔] Physics <br>
+      [✔] Colisões <br>
+      [ ] Save System <br>
+      [ ] Pause Menu
+    </p>
+    
+  </div>
+  
+  <button id="voltaInf">Voltar</button>
+</div>   
    
    <div class="menu ativo">
        <h2 class="title">Radius</h2>
        
        <div class="box">
          <p>Play</p>
-         <p>sobre</p>
+         <p>Sobre</p>
        </div>
    </div>
    
@@ -34,9 +100,17 @@
   
     
   <!-- Project -->
+  
+  <script type="text/javascript" charset="utf-8">
+    function fullScreen(){
+      document.documentElement.requestFullscreen();
+    }
+  </script>
+  
   <script src="./js/app.js"></script>
   <script src="./js/joystick.js"></script>
   <script src="./js/soms.js"></script>
+  <script src="./js/drawPlayer.js"></script>
   <script src="./js/Objetos.js"></script>
   <script src="./main.js"></script>
 </body>

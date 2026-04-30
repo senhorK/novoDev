@@ -31,7 +31,7 @@ class Colisoes {
                enemy.life -= 10;
                if(enemy.life <= 0){
                  player.score+= 100;
-                 part.add(enemy.x,enemy.y, "#f00")
+                 part.add(enemy.x,enemy.y,20, "#f00")
                  somExplosaoPesada();
                  eny.splice(j, 1);
                  
@@ -59,7 +59,7 @@ class Colisoes {
             if(mi.life <= 0) {
               mi.vivo = false;
               
-              part.add(mi.x, mi.y, "#f00");
+              part.add(mi.x, mi.y,20, "#f00");
               somExplosaoPesada();
               status.modo = "menu";
               main.menu.classList.add("ativo")
@@ -124,7 +124,8 @@ var Inimigos;
 class Main{
   constructor() {
     this.menu = document.querySelector(".menu");
-    
+    this.Info = document.querySelector(".Info");
+    this.voltaInf = document.querySelector("#voltaInf")
     this.idxF = 0;
     this.Danges =[];
     this.init();
@@ -196,14 +197,27 @@ class Main{
     window.requestAnimationFrame(this.loop);    
   }
   
+  resize(){
+    window.addEventListener("resize", ()=>{
+        lar = window.innerWidth;
+        alt = window.innerHeight;
+        
+        ctx.canvas.width  = lar;
+        ctx.canvas.height = alt;
+        ctx.canvas.style.width  = lar +"px";
+        ctx.canvas.style.height = alt +"px";
+
+    })
+  }
+  
   init(){
     ctx = document.querySelector("canvas").getContext("2d");    
+    this.resize();
+    
     ctx.canvas.width  = lar;
     ctx.canvas.height = alt;
     ctx.canvas.style.width  = lar +"px";
     ctx.canvas.style.height = alt +"px";
- 
- 
 
     
     
@@ -222,11 +236,22 @@ class Main{
       const p = e.target.closest("p");
       if (!p) return;
       
-      this.menu.classList.remove("ativo");
-      status.modo = "vinheta";
-      this.newGame();
+      const nome = p.innerText;
+      
+      if(nome === "Play"){
+         this.menu.classList.remove("ativo");
+         status.modo = "vinheta";
+         this.newGame();
+      }
+      else   
+      if(nome === "Sobre"){
+        this.Info.classList.add("ativo")
+      }
     })
-    
+    this.voltaInf.addEventListener("click", (e) => {
+        this.Info.classList.remove("ativo")
+    })
+
   
   }
   

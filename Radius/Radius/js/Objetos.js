@@ -49,8 +49,8 @@ class Part {
     this.f = false;
   }
   
-  add(x, y, c) {
-    for (var i = 0; i < 20; i++) {
+  add(x, y,t, c) {
+    for (var i = 0; i < t; i++) {
       this.ls.push(new Particulas(x, y,c));
     }
   }
@@ -90,9 +90,9 @@ class Mundo {
   }
   
   draw(){
-    ctx.beginPath()
-    ctx.strokeStyle = "#fff";
-    ctx.strokeRect(this.x , this.y, this.w, this.h);
+    //ctx.beginPath()
+    //ctx.strokeStyle = "#fff";
+    //ctx.strokeRect(this.x , this.y, this.w, this.h);
   }
 }
 class Balas {
@@ -103,7 +103,7 @@ class Balas {
     this.h = o.h;
     this.c = o.c;
     
-    this.rot = o.rot+24.6;
+    this.rot = o.rot;
     this.speed = 8;
     this.vx = Math.cos(this.rot) * this.speed;
     this.vy = Math.sin(this.rot) * this.speed;
@@ -135,6 +135,7 @@ class Player {
     this.h = 18;
     this.size = 18;
     this.rot = 0;
+    this.rot2 = 0;
     this.offsetRot = Math.PI / 7;
     this.balas = [];
     this.cdTiro = 10;
@@ -153,15 +154,24 @@ class Player {
   }
   
   
+
+  
   add() {
-     this.balas.push(new Balas({
-    x: this.x,
-    y: this.y,
-    w: 3,
-    h: 10,
-    rot: this.rot
-  }));
-  }
+      const offset = this.size / 2 + 20;
+      const bx = this.x + Math.cos(this.rot) * offset;
+      const by = this.y + Math.sin(this.rot) * offset;
+      
+      this.balas.push(new Balas({
+        x: bx,
+        y: by,
+        w: 3,
+        h: 10,
+        rot: this.rot
+      }));
+      
+      part.add(bx,by, 1, "#DC60FF")
+}
+  
   update(){
     if(!this.vivo) return;
     
@@ -170,13 +180,22 @@ class Player {
     this.rot = stick2.angle + this.offsetRot;
 
     
-     if(this.cdTiro > 0) this.cdTiro--;
+    //this.rot2 += 0.1;
+    this.rot2 += this.cdTiro > 0 ? 0.4 : 0.1;
+    
+     if(this.cdTiro > 0){
+       this.cdTiro--;
+      // this.rot2 += 0.3;
+     }
      if(stick2.subX != 0 && this.cdTiro <= 0) {
         this.add();
        // somTiro();
         somLaize()
         this.cdTiro = 5;
+        
      }
+     
+     
      
      
      
@@ -215,38 +234,16 @@ class Player {
         b.draw()
       }
       
-  
-      for (var i = 0; i < this.parts.length; i++) {
-          var ang = this.parts[i];
-          const isHead = i === 2;
-          const cor = isHead ? "#FF00008C" : "#FFFFFFED";
-          
-          
-          
-          ctx.save();
-          ctx.translate(this.x, this.y);
-          ctx.rotate(ang + this.rot);
-          
-          app.draw.rect({
-            ctx,
-            x: 0,
-            y: 0,
-            w: this.size,
-            h: this.size,
-            cor: cor,
       
-          });
-          
-          ctx.restore();
-      }
       
-    
-    
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate((Math.PI / 4) + this.rot); 
-    app.draw.circle({ctx, x: 0, y: 0, size: (this.size/1.5), cor: "#fff"})
-    ctx.restore();
+      Player5({
+        x:  this.x,
+        y:  this.y,
+        rot: this.rot,
+        rot2: this.rot2,
+        size: this.w
+      });     
+        
     
     
     
@@ -262,6 +259,44 @@ class Player {
        
      })
   }
+  
+  
+  /*draw() {
+  ctx.save();
+  ctx.translate(this.x, this.y);
+  ctx.rotate(this.rot);
+
+  // asa esquerda
+  app.draw.triangle({
+    ctx,
+    x: -15,
+    y: 0,
+    size: 10,
+    cor: "#00ffff"
+  });
+
+  // núcleo
+  app.draw.circle({
+    ctx,
+    x: 0,
+    y: 0,
+    size: 10,
+    cor: "#ffffff"
+  });
+
+  // asa direita
+  app.draw.triangle({
+    ctx,
+    x: 15,
+    y: 0,
+    size: 10,
+    cor: "#00ffff"
+  });
+
+  ctx.restore();
+}*/
+  
+  
   drawLife(){app.draw.rect({ctx,x: 20, y: 30,w: 3,h: this.life,cor: "#0f0"})}
 }
 
@@ -315,13 +350,15 @@ class criarEnemy {
     
     this.vx = (Math.random() - 0.5) * 2;
     this.vy = (Math.random() - 0.5) * 2;
-    this.speed = 2;
+    this.speed = speed;
     this.timeMove = 0;
     this.visao = false;
-    this.range = 200;
+    this.dbug = false;
+    this.range = range;
     this.dx; 
     this.dy; 
     this.dist;
+    this.rotate = 0;
   }
   
   update(){
@@ -367,7 +404,7 @@ class criarEnemy {
   
   draw(){
     
-    if(this.visao) app.draw.circle({ctx,x: this.x, y: this.y,size: 200, cor: "rgba(0, 0, 0, 0.4)", stroke: "#f00"});
+    if(this.visao && this.dbug) app.draw.circle({ctx,x: this.x, y: this.y,size: this.range, cor: "rgba(0, 0, 0, 0.4)", stroke: "#f00"});
     
     let lifeBar = Math.max(0, this.life);
     app.draw.rect({ctx, x: this.x -(this.life/2),y: this.y-(this.h),w: lifeBar, h: 2, cor: "#f00"})
@@ -378,31 +415,70 @@ class criarEnemy {
     }
     
     if(this.type === "tri") {
-       app.draw.triangle({ctx, x: this.x, y: this.y,size: this.w/2,cor: this.cor})
+       app.draw.triangle({ctx, x: this.x+this.w/2, y: this.y+this.h/2, size: this.w/2, cor: this.cor})
     }
+    
+    
+    
+    this.rotate += 0.1;
+    
+    if(this.type === "boss") {
+      this.rotate += 0.02;
+      
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      
+      // núcleo central
+      //app.draw.circle({ctx,x: this.w/2, y: this.h/2, size: this.w/2,  cor: "#ff0000", stroke: "#fff"});
+      ctx.beginPath();
+      ctx.strokeStyle = "#f00";
+      ctx.arc(this.w/2, this.h/2,  this.w/2, 0, Math.PI*2);
+      ctx.stroke()
+      
+      ctx.beginPath();
+      ctx.strokeStyle = "#f00";
+      ctx.arc(this.w / 2, this.h / 2, this.w / 4, 0, Math.PI * 2);
+      ctx.fill()
+      
+      // triângulos orbitando
+      //const total = 4;
+      //const radius = 120;
+      const total = 4;
+      const radius = this.w * 0.6;
+      
+      
+      
+      for (let i = 0; i < total; i++) {
+        let ang = (Math.PI * 2 / total) * i + this.rotate;
+        
+        let tx = Math.cos(ang) * radius + this.w/2;
+        let ty = Math.sin(ang) * radius + this.w/2;
+        
+        ctx.save();
+        ctx.translate(tx, ty);
+        ctx.rotate(ang);
+        
+        app.draw.triangle({
+          ctx,
+          x: 0,
+          y: 0,
+          size: 20,
+          cor: "#ffffff"
+        });
+        
+        ctx.restore();
+      }
+      
+      ctx.restore();
+    }
+          
+    
+    
+    
   }
 }
 
-/*
-function enemyBase(total, typo) {
-   
-   let liste =[];
-   
-   
-   
-   for(var i = 0; i < total; i++) {
-     liste.push(new criarEnemy({
-       x: Math.random() * mundo.w,
-       y: Math.random() * mundo.h,
-       w: 40, h: 40,
-       typo: typo
-     }));
-      
-   }
-   
-   return liste;
-}
-*/
+
 function enemyBase(o) {
   const {
       total = 5,
@@ -494,7 +570,7 @@ function fase3() {
     fase: "FASE III",
     enemies: [
       ...enemyBase({
-        total: 10,
+        total: 8,
         typo: "base",
         life: 150,
         range: 250
@@ -516,14 +592,14 @@ function fase4() {
     fase: "FASE IV",
     enemies: [
       ...enemyBase({
-        total: 15,
+        total: 7,
         typo: "base",
         life: 200,
         speed: 3
       }),
       
       ...enemyBase({
-        total: 10,
+        total: 7,
         typo: "tri",
         life: 250,
         speed: 4
@@ -538,7 +614,7 @@ function fase5() {
     fase: "FASE V",
     enemies: [
       ...enemyBase({
-        total: 20,
+        total: 10,
         typo: "base",
         life: 250,
         speed: 3.5,
@@ -546,7 +622,7 @@ function fase5() {
       }),
       
       ...enemyBase({
-        total: 15,
+        total: 10,
         typo: "tri",
         life: 300,
         speed: 5,
@@ -564,58 +640,25 @@ function bossStage() {
       ...enemyBase({
         total: 1,
         typo: "boss",
-        w: 120,
-        h: 120,
+        w: 150,
+        h: 150,
         life: 5000,
-        speed: 2,
-        range: 700,
+        speed: 3,
+        range: 500,
         cor: "#f00"
       }),
       
-      ...enemyBase({
+     /* ...enemyBase({
         total: 10,
         typo: "tri",
         speed: 4
-      })
+      })*/
     ]
   };
 }
 
-/*
-function fase1() {
-  return [
-    ...enemyBase({
-      total: 5,
-      typo: "base"
-    }),
-    
-    ...enemyBase({
-      total: 3,
-      typo: "tri",
-      speed: 3,
-      range: 300
-    })
-  ];
-}
-function fase2() {
-    return [
-  ...enemyBase({ total: 5, typo: "base" , cor: "#00f", nome: "nome da faze"}),
-  ...enemyBase({ total: 5, typo: "tri" , nome: "nome da faze"})
-]
-}
-function fase3() {
-  return [
-  ...enemyBase({ total: 5, typo: "base" }),
-  ...enemyBase({ total: 5, typo: "tri" })
-]
-}
-function fase4() {
-  return [
-  ...enemyBase({ total: 5, typo: "base" }),
-  ...enemyBase({ total: 5, typo: "tri" })
-]
-}
-*/
+
+
 
 
 

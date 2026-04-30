@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Novo Dev | Games & Tech</title>
-  <link id="linkCSS" rel="stylesheet" href="./styleDia.css">
+
 </head>
+
+  <link rel="manifest" href="manifest.json">
+  <link id="linkCSS" rel="stylesheet" href="./styleDia.css">
+
+
 
 <body>
   <div class="bg-blur"></div>
@@ -273,5 +278,14 @@
   
   
   <script src="./main.js"></script>
+  
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registrado!', reg))
+        .catch(err => console.error('Erro ao registrar SW:', err));
+    }
+  </script>
 </body>
 </html>

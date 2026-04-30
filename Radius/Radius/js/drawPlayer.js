@@ -29,6 +29,7 @@ function calibre1(o) {
   const base = { w: 3, h: 10, rot, c: "#fff" };
 
   balas.push(new Balas({ ...base, x: bx, y: by }));
+  part.add(bx, by, 1, "#fff");
 }
 function calibre2(o) {
   const { balas = [], rot = 0 } = o;
@@ -39,6 +40,7 @@ function calibre2(o) {
   const base = { w: 3, h: 10, rot, c: "#f00" };
   
   balas.push(new Balas({ ...base, x: bx, y: by }));
+  part.add(bx, by, 1, "#f00");
 }
 function calibre3(o) {
   const { balas = [], rot = 0 } = o;
@@ -60,6 +62,8 @@ function calibre3(o) {
     x: bx - sideX * side,
     y: by - sideY * side
   }));
+  
+  part.add(bx, by, 1, "#F8FF14");
 }
 function calibre4(o) {
   const { balas = [], rot = 0 } = o;
@@ -85,6 +89,8 @@ function calibre4(o) {
     x: bx - sideX * side,
     y: by - sideY * side
   }));
+  
+  part.add(bx, by, 1, "#14FF14");
 }
 function leque3(o) {
   const { balas = [], rot = 0 } = o;
@@ -99,7 +105,7 @@ function leque3(o) {
   balas.push(new Balas({ ...base, x: bx, y: by, rot: rot }));
   balas.push(new Balas({ ...base, x: bx, y: by, rot: rot + spread }));
   
-  part.add(bx, by, 1, "#DC60FF");
+  part.add(bx, by, 3, "#E27DFF");
 }
 
 

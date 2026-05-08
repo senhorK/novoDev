@@ -71,6 +71,8 @@ body {
 }
 
 /* tabuleiro */
+
+/*******/
 .tabuleiro {
     display: grid;
     border-radius: 8px;
@@ -110,7 +112,9 @@ body {
 
 
 .casaBranca.ativo,.casaPreta.ativo {
-   background: #D069698F;
+    border: 2px solid #00015A;
+    background: #D069698F;
+      /*background: rgba(105, 208, 117, 0.03137254901960784);*/
 }
 
 

@@ -48,8 +48,8 @@ class Tabuleiro{
   setup() {
   // peões
   for (let x = 0; x < 8; x++) {
-    this.addPeca(x, 1, "peao", "preto", "./pedras/peaoPreto.svg");
-    this.addPeca(x, 6, "peao", "branco", "./pedras/peaoBranco.svg");
+    //this.addPeca(x, 1, "peao", "preto", "./pedras/peaoPreto.svg");
+    //this.addPeca(x, 6, "peao", "branco", "./pedras/peaoBranco.svg");
   }
   
   // cavalos
@@ -65,7 +65,7 @@ class Tabuleiro{
   this.addPeca(4, 7, "rei", "branco", "./pedras/reiBranco.svg");
   
   this.addPeca(3, 0, "rainha", "preto", "./pedras/rainhaPreta.svg");
-  this.addPeca(3, 7, "tainha", "branco", "./pedras/rainhaBranca.svg");
+  this.addPeca(3, 7, "rainha", "branco", "./pedras/rainhaBranca.svg");
   
   this.addPeca(2,0, "bispo", "preto", "./pedras/bispoPreto.svg");
   this.addPeca(5,0, "bispo", "preto", "./pedras/bispoPreto.svg");
@@ -116,6 +116,94 @@ class Tabuleiro{
   
   
   
+
+  
+  posBispo() {
+      const x = this.selet.x;
+      const y = this.selet.y;
+      
+      const direcoes = [
+        { dx: 1, dy: 1 },
+        { dx: -1, dy: 1 },
+        { dx: 1, dy: -1 },
+        { dx: -1, dy: -1 }
+      ];
+      
+      this.posivel = [];
+      
+      for (let dir of direcoes) {
+        for (let i = 1; i < 8; i++) {
+          const nx = x + dir.dx * i;
+          const ny = y + dir.dy * i;
+          
+          if (!this.isDentro({ x: nx, y: ny })) break;
+          
+          const alvo = this.getPeca(nx, ny);
+          
+          if (!alvo) {
+            // casa livre
+            this.posivel.push({ x: nx, y: ny });
+          } else {
+            // tem peça
+            if (alvo.cor !== this.selet.cor) {
+              // inimigo → pode capturar
+              this.posivel.push({ x: nx, y: ny });
+            }
+            // parou (não passa por cima)
+            break;
+          }
+        }
+      }
+      
+      this.showPos();
+    }
+  posTorre(){
+        const px = this.selet.x;
+        const py = this.selet.y;
+        
+        
+        const dir = [
+          { x: 1, y: 0 },
+          { x: -1, y: 0 },
+          { x: 0, y: 1 },
+          { x: 0, y: -1 }
+        ]
+        
+        
+        this.posivel = [];
+        
+        for (let d of dir) {
+          let nx = px + d.x;
+          let ny = py + d.y;
+          
+          
+          while (this.isDentro({ x: nx, y: ny })) {
+            
+            const alvo = this.getPeca(nx, ny)
+            
+            
+            
+            
+            if (!alvo) {
+              this.posivel.push({ x: nx, y: ny })
+            }
+            else {
+              if (alvo.cor !== this.selet.cor) {
+                this.posivel.push({ x: nx, y: ny })
+              }
+              break;
+            }
+            
+            nx += d.x;
+            ny += d.y;
+          }
+          
+          
+        }
+        
+        
+        this.showPos();
+  }
   posCavalo(){
           const x = this.selet.x;
           const y = this.selet.y;
@@ -150,7 +238,21 @@ class Tabuleiro{
        
           this.showPos();
   }
-  
+  posRainha() {
+      this.posivel = [];
+      console.log("88888")
+      this.posTorre();
+      
+      const torreMoves = [...this.posivel];
+      
+      this.posBispo();
+      const bispoMoves = [...this.posivel];
+      
+      this.posivel = [...torreMoves, ...bispoMoves];
+      
+      this.showPos();
+}
+posRei() {}
   
   
   
@@ -177,7 +279,19 @@ class Tabuleiro{
       if(!this.selet && peca){
           this.selet = peca;
           
-          if(this.selet.tipo === "cavalo") this.posCavalo(peca)
+          if(this.selet.tipo === "cavalo") this.posCavalo()
+          else 
+          if(this.selet.tipo === "torre") this.posTorre()
+          else 
+          if(this.selet.tipo === "bispo") this.posBispo()
+          else 
+          if (this.selet.tipo === "rainha") this.posRainha()
+            
+          
+            
+            
+            
+             
           
 
       }

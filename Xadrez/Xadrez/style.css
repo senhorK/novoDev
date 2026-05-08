@@ -1,0 +1,118 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-size: 15pt;
+    background: #414141
+}
+
+.dbug{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #FFFFFFAB;
+  font-size: 10px;
+}
+
+
+
+/* container geral */
+.lay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  
+  padding: 20px;
+  border-radius: 12px;
+  background: #3a3a3a;
+  
+  
+
+  box-shadow: inset 0 0 0 15px #222;
+}
+.letras{
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  font-size: 10px;
+  
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #FFFFFF;
+}
+.letras span{
+  width: 40px;
+}
+.numeros{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  line-height: 40px;
+  font-size: 10px;
+  
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #FFFFFF;
+}
+.numeros span{
+  width: 15px;
+  height: 40px;
+  
+}
+
+/* tabuleiro */
+.tabuleiro {
+    display: grid;
+    border-radius: 8px;
+    overflow: hidden;
+    
+}
+
+
+
+/* casas */
+.casaPreta,
+.casaBranca {
+  
+  transition: 0.2s;
+}
+
+/* cores estilo chess.com */
+.casaPreta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #769656;
+}
+
+.casaBranca {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eeeed2;
+}
+
+
+.tabuleiro img{
+  width: 30px;
+  height: 30px;
+}
+
+
+.casaBranca.ativo,.casaPreta.ativo {
+   background: #D069698F;
+}
+
+
+
+

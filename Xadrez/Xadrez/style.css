@@ -7,7 +7,13 @@
 
 body {
     font-size: 15pt;
-    background: #414141
+    transition: all 0.5s ease;
+    background: #FFFFFF
+}
+
+body.ativo {
+    font-size: 15pt;
+    background: #343232
 }
 
 .dbug{
@@ -71,8 +77,6 @@ body {
 }
 
 /* tabuleiro */
-
-/*******/
 .tabuleiro {
     display: grid;
     border-radius: 8px;
